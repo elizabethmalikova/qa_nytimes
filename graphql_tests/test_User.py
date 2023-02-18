@@ -1,14 +1,217 @@
 import helper
 import requests
 
-query = """"query user {\n  me {\n    impersonated\n    hasPersonalGithubInstall\n    privateCompanyMember\n    selfServeEnabled\n    privateMode\n    showTosModal\n    id\n    path\n    imageUrl\n    amIAdmin\n    title\n    displayName\n    companyName\n    canIModerate\n    username\n    location\n    shouldForceVcsConnection\n    stripePortalUrl\n    selfServeChecklist {\n      completed\n      dismissed\n      items {\n        slug\n        completed\n        __typename\n      }\n      __typename\n    }\n    stackApiTrialSubscription {\n      plan {\n        slug\n        __typename\n      }\n      currentPeriodEndsAt\n      active\n      __typename\n    }\n    stackApiCurrentSubscription {\n      couponPercentOff\n      plan {\n        slug\n        __typename\n      }\n      currentPeriodEndsAt\n      active\n      __typename\n    }\n    stackApiKey {\n      apiKey\n      usageLimit\n      currentPeriod {\n        usageCount\n        periodEndsAt\n        __typename\n      }\n      __typename\n    }\n    jobSearch {\n      companies {\n        name\n        imageUrl\n        slug\n        __typename\n      }\n      tools {\n        name\n        imageUrl\n        __typename\n      }\n      keywords\n      location\n      latitude\n      longitude\n      emailEnabled\n      __typename\n    }\n    bookmarkedJobs {\n      count\n      edges {\n        node {\n          bookmarked\n          id\n          angellistJobUrl\n          title\n          location\n          tools {\n            id\n            imageUrl\n            name\n            __typename\n          }\n          company {\n            imageUrl\n            name\n            path\n            __typename\n          }\n          __typename\n        }\n        __typename\n      }\n      __typename\n    }\n    followedCompanies {\n      count\n      edges {\n        node {\n          id\n          name\n          thumbUrl\n          imageUrl\n          path\n          __typename\n        }\n        __typename\n      }\n      __typename\n    }\n    stacks {\n      edges {\n        node {\n          ...stackFields\n          __typename\n        }\n        __typename\n      }\n      __typename\n    }\n    companies {\n      id\n      slug\n      name\n      imageUrl\n      myRole\n      privateMode\n      stacksList(first: 10) {\n        edges {\n          node {\n            ...stackFields\n            __typename\n          }\n          __typename\n        }\n        __typename\n      }\n      plans {\n        id\n        slug\n        __typename\n      }\n      __typename\n    }\n    decisionPrompt {\n      id\n      active\n      message\n      promptType\n      selectedTool {\n        id\n        name\n        imageUrl\n        __typename\n      }\n      __typename\n    }\n    emailSettings {\n      emailFeedDaily\n      emailFeedWeekly\n      __typename\n    }\n    plans {\n      slug\n      __typename\n    }\n    __typename\n  }\n}\n\nfragment stackFields on Stack {\n  id\n  imageUrl\n  name\n  identifier\n  path\n  private\n  owner {\n    ... on User {\n      id\n      imageUrl\n      username\n      __typename\n    }\n    ... on Company {\n      id\n      imageUrl\n      slug\n      name\n      __typename\n    }\n    __typename\n  }\n  __typename\n}\n"
+query = """
+query user {
+  me {
+    impersonated
+    hasPersonalGithubInstall
+    privateCompanyMember
+    selfServeEnabled
+    privateMode
+    showTosModal
+    id
+    path
+    imageUrl
+    amIAdmin
+    title
+    displayName
+    companyName
+    canIModerate
+    username
+    location
+    shouldForceVcsConnection
+    stripePortalUrl
+    selfServeChecklist {
+      completed
+      dismissed
+      items {
+        slug
+        completed
+        __typename
+      }
+      __typename
+    }
+    stackApiTrialSubscription {
+      plan {
+        slug
+        __typename
+      }
+      currentPeriodEndsAt
+      active
+      __typename
+    }
+    stackApiCurrentSubscription {
+      couponPercentOff
+      plan {
+        slug
+        __typename
+      }
+      currentPeriodEndsAt
+      active
+      __typename
+    }
+    stackApiKey {
+      apiKey
+      usageLimit
+      currentPeriod {
+        usageCount
+        periodEndsAt
+        __typename
+      }
+      __typename
+    }
+    jobSearch {
+      companies {
+        name
+        imageUrl
+        slug
+        __typename
+      }
+      tools {
+        name
+        imageUrl
+        __typename
+      }
+      keywords
+      location
+      latitude
+      longitude
+      emailEnabled
+      __typename
+    }
+    bookmarkedJobs {
+      count
+      edges {
+        node {
+          bookmarked
+          id
+          angellistJobUrl
+          title
+          location
+          tools {
+            id
+            imageUrl
+            name
+            __typename
+          }
+          company {
+            imageUrl
+            name
+            path
+            __typename
+          }
+          __typename
+        }
+        __typename
+      }
+      __typename
+    }
+    followedCompanies {
+      count
+      edges {
+        node {
+          id
+          name
+          thumbUrl
+          imageUrl
+          path
+          __typename
+        }
+        __typename
+      }
+      __typename
+    }
+    stacks {
+      edges {
+        node {
+          ...stackFields
+          __typename
+        }
+        __typename
+      }
+      __typename
+    }
+    companies {
+      id
+      slug
+      name
+      imageUrl
+      myRole
+      privateMode
+      stacksList(first: 10) {
+        edges {
+          node {
+            ...stackFields
+            __typename
+          }
+          __typename
+        }
+        __typename
+      }
+      plans {
+        id
+        slug
+        __typename
+      }
+      __typename
+    }
+    decisionPrompt {
+      id
+      active
+      message
+      promptType
+      selectedTool {
+        id
+        name
+        imageUrl
+        __typename
+      }
+      __typename
+    }
+    emailSettings {
+      emailFeedDaily
+      emailFeedWeekly
+      __typename
+    }
+    plans {
+      slug
+      __typename
+    }
+    __typename
+  }
+}
+
+fragment stackFields on Stack {
+  id
+  imageUrl
+  name
+  identifier
+  path
+  private
+  owner {
+    ... on User {
+      id
+      imageUrl
+      username
+      __typename
+    }
+    ... on Company {
+      id
+      imageUrl
+      slug
+      name
+      __typename
+    }
+    __typename
+  }
+  __typename
+}
 """
-operationName = "UserQuery"
 variables = {}
 
 
-def test_UserQuery():
+def test_User():
     response = requests.post(helper.base_url, json={"query": query, "variables": variables})
-    print(response.text)
     assert response.status_code == 200
-    #assert response.json()['data']['user']['__typename'] == "User"
+    assert response.json()['data']['me'] is None
