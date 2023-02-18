@@ -1,2 +1,4 @@
-# qa_nytimes
-UI/UX and Graphql autotesting
+# Setup 
+
+Python:
+- sudo apt install python3
