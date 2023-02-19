@@ -1,4 +1,4 @@
-import helper
+from helper import base_url
 import requests
 
 query = """
@@ -212,6 +212,5 @@ variables = {}
 
 
 def test_User():
-    response = requests.post(helper.base_url, json={"query": query, "variables": variables})
-    assert response.status_code == 200
-    assert response.json()['data']['me'] is None
+    response = requests.post(base_url, json={"query": query, "variables": variables})
+    assert response.status_code == 200 and response.json()['data']['me'] is None
