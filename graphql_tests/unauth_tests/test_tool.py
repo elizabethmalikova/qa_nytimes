@@ -1,4 +1,4 @@
-from helper import base_url
+from graphql_tests.helper import base_url
 import requests
 
 query = """
