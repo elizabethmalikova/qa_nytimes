@@ -1,11 +1,11 @@
-from helper import base_url
+from graphql_tests.helper import base_url
 import requests
 from test_contactBySlug import test_contactBySlug
 
 query = """
-query userStacksUsing($id: ID!, $after: String, $first: Int) {
+query companyStacksUsing($id: ID!, $after: String, $first: Int) {
   tool(id: $id) {
-    userStacksUsing(first: $first, after: $after) {
+    companyStacksUsing(first: $first, after: $after) {
       count
       pageInfo {
         hasNextPage
@@ -32,12 +32,11 @@ query userStacksUsing($id: ID!, $after: String, $first: Int) {
 }
 """
 variables = {
-  "id": test_contactBySlug(),
-  "first": 9
+    "id": test_contactBySlug(),
+    "first": 9
 }
 
 
-def test_userStacksUsing():
-    response = requests.post(base_url,
-                             json={"query": query, "variables": variables})
-    assert response.status_code == 200 and response.json()['data']['tool']['userStacksUsing']['count'] > 0
+def test_companyStacksUsing():
+    response = requests.post(base_url, json={"query": query, "variables": variables})
+    assert response.status_code == 200 and response.json()['data']['tool']['companyStacksUsing']['count'] > 0
