@@ -3,9 +3,9 @@ import requests
 from test_contactBySlug import test_contactBySlug
 
 query = """
-query userStacksUsing($id: ID!, $after: String, $first: Int) {
+query followers($id: ID!, $after: String, $first: Int) {
   tool(id: $id) {
-    userStacksUsing(first: $first, after: $after) {
+    followers(first: $first, after: $after) {
       count
       pageInfo {
         hasNextPage
@@ -14,12 +14,16 @@ query userStacksUsing($id: ID!, $after: String, $first: Int) {
       }
       edges {
         node {
-          name
-          imageUrl
-          thumbUrl
-          thumbRetinaUrl
-          identifier
           id
+          displayName
+          username
+          imageUrl
+          title
+          popularity
+          path
+          stacksCount
+          favoritesCount
+          votesCount
           __typename
         }
         __typename
@@ -33,12 +37,13 @@ query userStacksUsing($id: ID!, $after: String, $first: Int) {
 """
 
 
-def test_userStacksUsing():
+def test_followers():
     tool_id = test_contactBySlug()
     variables = {
-        "id": tool_id,
-        "first": 9
+        "first": 10,
+        "id": tool_id
     }
     response = requests.post(base_url, json={"query": query, "variables": variables})
+    data = response.json()['data']
     response.raise_for_status()
-    assert response.json()['data']['tool']['userStacksUsing']['count'] > 0
+    assert data['tool']['followers']['count'] > 0

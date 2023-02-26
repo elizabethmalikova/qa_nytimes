@@ -1,5 +1,5 @@
-from graphql_tests.helper import base_url
 import requests
+from graphql_tests.helper import base_url
 
 query = """
 query contactBySlug($id: ID!) {
@@ -12,12 +12,20 @@ query contactBySlug($id: ID!) {
   }
 }
 """
+
 variables = {
-  "id": "pypi-azure"
+    "id": "React"
 }
 
 
 def test_contactBySlug():
     response = requests.post(base_url, json={"query": query, "variables": variables})
-    assert response.status_code == 200 and len(response.json()['data']['tool']['id']) > 0
-    return str(response.json()['data']['tool']['id'])
+
+    response.raise_for_status()
+    assert 'data' in response.json()
+    assert 'tool' in response.json()['data']
+    assert 'id' in response.json()['data']['tool']
+
+    tool_id = str(response.json()['data']['tool']['id'])
+    assert len(tool_id) > 0
+    return tool_id

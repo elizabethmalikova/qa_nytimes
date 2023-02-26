@@ -31,12 +31,17 @@ query companyStacksUsing($id: ID!, $after: String, $first: Int) {
   }
 }
 """
-variables = {
-    "id": test_contactBySlug(),
-    "first": 9
-}
 
 
 def test_companyStacksUsing():
+    tool_id = test_contactBySlug()
+    variables = {
+        "id": tool_id,
+        "first": 9
+    }
     response = requests.post(base_url, json={"query": query, "variables": variables})
-    assert response.status_code == 200 and response.json()['data']['tool']['companyStacksUsing']['count'] > 0
+    data = response.json()['data']
+    response.raise_for_status()
+    assert data['tool']['companyStacksUsing']['count'] > 0
+    company_id = str(data['tool']['companyStacksUsing']['edges'][0]['node']['id'])
+    return company_id

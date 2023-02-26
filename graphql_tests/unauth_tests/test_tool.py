@@ -226,5 +226,5 @@ variables = {
 
 def test_userStacks():
     response = requests.post(base_url, json={"query": query, "variables": variables})
-    assert response.status_code == 200
+    response.raise_for_status()
     return response.json()['data']['tool']['websiteUrl'] == "https://github.com/Azure/azure-sdk-for-python"

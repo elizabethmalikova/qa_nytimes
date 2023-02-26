@@ -356,5 +356,5 @@ variables = {
 
 def test_items():
     response = requests.post(base_url, json={"query": query, "variables": variables})
-    assert response.status_code == 200 and len(response.json()['data']['feed']['edges'][0]['node']['id']) > 0
-    return response.json()['data']['feed']['edges'][0]['node']['id']
+    response.raise_for_status()
+    return response.json().get('data', {}).get('feed', {}).get('edges', [])[0].get('node', {}).get('id')

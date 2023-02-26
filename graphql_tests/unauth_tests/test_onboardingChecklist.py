@@ -20,4 +20,6 @@ variables = {}
 
 def test_onboardingChecklist():
     response = requests.post(base_url, json={"query": query, "variables": variables})
-    assert response.status_code == 200 and response.json()['data']['onboardingChecklist'] is None
+    data = response.json().get('data', {})
+    response.raise_for_status()
+    assert data.get('onboardingChecklist') is None

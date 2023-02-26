@@ -50,4 +50,5 @@ variables = {}
 
 def test_privateMode():
     response = requests.post(base_url, json={"query": query, "variables": variables})
-    assert response.status_code == 200 and response.json()['data']['currentPrivateCompany'] is None
+    response.raise_for_status()
+    assert response.json()['data']['currentPrivateCompany'] is None

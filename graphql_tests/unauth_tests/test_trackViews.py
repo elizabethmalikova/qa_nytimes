@@ -1,22 +1,21 @@
 from graphql_tests.helper import base_url
 import requests
+from test_toolDecisions import test_toolDecisions
 
 query = """
 mutation trackViews($decisionIds: [ID!]!, $clientContext: String) {
   trackViews(decisionIds: $decisionIds, clientContext: $clientContext)
 }
 """
-variables = {
-  "clientContext": "StackAdvice-/stackups/angularjs-vs-backbone-vs-knockout",
-  "decisionIds": [
-    "104046417712610986",
-    "104070793281526402",
-    "104093267031982177",
-    "104055431108877531"
-  ]
-}
 
 
 def test_trackViews():
+    users_id = test_toolDecisions()
+    variables = {
+        "clientContext": "Reasons-/" + "react",
+        "decisionIds": users_id
+    }
     response = requests.post(base_url, json={"query": query, "variables": variables})
-    assert response.status_code == 200 and response.json()['data']['trackViews'] is True
+    response.raise_for_status()
+    assert response.json()['data']['trackViews'] is True
+    print(response.json())

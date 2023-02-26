@@ -213,4 +213,5 @@ variables = {}
 
 def test_User():
     response = requests.post(base_url, json={"query": query, "variables": variables})
-    assert response.status_code == 200 and response.json()['data']['me'] is None
+    response.raise_for_status()
+    assert response.json()['data']['me'] is None
